@@ -1,12 +1,16 @@
 import pygame
 import random
 import numpy as np
+import os
 
+os.environ["DISPLAY"] = ":0"
 # Initialize Pygame
 pygame.init()
 
 # Set up the display
 width, height = 1200, 900
+
+
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Balloon Bounce")
 
@@ -31,7 +35,7 @@ class Baloon():
 
     def show(self):
         # Draw the balloon
-        pygame.draw.circle(screen, RED, baloon.x, baloon.radius)
+        pygame.draw.circle(screen, RED, (int(baloon.x[0]),int(baloon.x[1])), baloon.radius)
 
     def update(self):
         # Check if balloon hits the ground
