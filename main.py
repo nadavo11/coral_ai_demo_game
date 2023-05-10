@@ -12,7 +12,7 @@ os.environ["DISPLAY"] = ":0"
 #pygame.init()
 
 # Set up the display
-width, height = 1200, 900
+width, height = 1400, 600
 
 
 screen = pygame.display.set_mode((width, height))
@@ -23,8 +23,11 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (180, 40, 40)
 
-_NUM_KEYPOINTS = 17
 model = "movenet.tflite"
+interpreter = make_interpreter(model)
+interpreter.allocate_tensors()
+
+_NUM_KEYPOINTS = 17
 def det_pose(input):
     """
     takes an image as input and returns a tensor of detected bodypoints in the image.
@@ -35,8 +38,6 @@ def det_pose(input):
     :return:
     """
 
-    interpreter = make_interpreter(model)
-    interpreter.allocate_tensors()
     img = Image.fromarray(input)
     resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
     common.set_input(interpreter, resized_img)
@@ -57,7 +58,7 @@ class Baloon():
     def bounce(self,loc):
         dist = np.linalg.norm(self.x - loc)
         if dist < self.radius:
-            self.v +=  0.05 * (self.x - loc)
+            self.v +=  0.9 * (self.x - loc)
         return 0
 
     def show(self):
@@ -86,7 +87,7 @@ vid = cv2.VideoCapture(1)
 # Game loop
 running = True
 baloon = Baloon()
-g = (0,0.005)
+g = (0,0.5)
 
 while running:
     screen.fill(BLACK)
@@ -97,8 +98,8 @@ while running:
     #POSE DETECTION
     pose = det_pose(inp)
     for p in pose:
-        pygame.draw.circle(screen, RED, (int(p[0]), int(p[1])), 5)
-
+        pygame.draw.circle(screen, RED, (int(width * p[1]), int(height * p[0])), 5)
+    
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -108,7 +109,8 @@ while running:
     mouse = pygame.mouse.get_pos()
 
     # Bounce balloon if it hits the mouse
-    baloon.bounce(mouse)
+    baloon.bounce((int(width * pose[10][1]),int(height * pose[10][0])))
+    baloon.bounce((int(width * pose[9][1]),int(height * pose[9][0])))
     baloon.update()
     baloon.show()
 
