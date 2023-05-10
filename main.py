@@ -94,7 +94,7 @@ while running:
     pose = det_pose(inp)
     for p in pose:
         pygame.draw.circle(screen, RED, (int(p[0]), int(p[1])), 5)
-
+        print(p)
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
