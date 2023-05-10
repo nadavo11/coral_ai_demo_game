@@ -1,13 +1,10 @@
 import pygame
 import random
 import numpy as np
-<<<<<<< HEAD
 import os
-=======
 import cv2
 from pycoral.adapters import common
 from pycoral.utils.edgetpu import make_interpreter
->>>>>>> 4ebddb5d5db4e173035650896738ce57c789025a
 
 os.environ["DISPLAY"] = ":0"
 # Initialize Pygame
