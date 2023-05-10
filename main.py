@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 from pycoral.adapters import common
 from pycoral.utils.edgetpu import make_interpreter
+from PIL import Image
 
 # Initialize Pygame
 #pygame.init()
