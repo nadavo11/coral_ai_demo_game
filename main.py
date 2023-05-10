@@ -1,11 +1,17 @@
 import pygame
 import random
 import numpy as np
+<<<<<<< HEAD
 import os
+=======
+import cv2
+from pycoral.adapters import common
+from pycoral.utils.edgetpu import make_interpreter
+>>>>>>> 4ebddb5d5db4e173035650896738ce57c789025a
 
 os.environ["DISPLAY"] = ":0"
 # Initialize Pygame
-pygame.init()
+#pygame.init()
 
 # Set up the display
 width, height = 1200, 900
@@ -17,7 +23,30 @@ pygame.display.set_caption("Balloon Bounce")
 # Set up colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-RED = (255, 0, 0)
+RED = (180, 40, 40)
+
+_NUM_KEYPOINTS = 17
+model = "movenet.tflite"
+def det_pose(input):
+    """
+    takes an image as input and returns a tensor of detected bodypoints in the image.
+    A pose is a set of keypoints that represent the position and orientation of a person or an object.
+    Each keypoint is a tuple of (x, y), *relative* coordinates of the keypoint,
+    The function uses a pre-trained model to perform pose estimation on the image.
+    :param input: img
+    :return:
+    """
+
+    interpreter = make_interpreter(model)
+    interpreter.allocate_tensors()
+    img = Image.fromarray(input)
+    resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
+    common.set_input(interpreter, resized_img)
+
+    interpreter.invoke()
+
+    pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
+    return pose
 
 # Set up the balloon
 class Baloon():
@@ -54,7 +83,8 @@ class Baloon():
         self.x += self.v
 
 
-
+# define a video capture object
+vid = cv2.VideoCapture(1)
 # Game loop
 running = True
 baloon = Baloon()
@@ -62,6 +92,14 @@ g = (0,0.005)
 
 while running:
     screen.fill(BLACK)
+
+    # Capture the video frame
+    # by frame
+    ret, inp = vid.read()
+    #POSE DETECTION
+    pose = det_pose(inp)
+    for p in pose:
+        pygame.draw.circle(screen, RED, (int(p[0]), int(p[1])), 5)
 
     # Handle events
     for event in pygame.event.get():
