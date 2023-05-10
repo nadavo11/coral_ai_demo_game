@@ -46,8 +46,6 @@ _NUM_KEYPOINTS = 17
 model = "movenet.tflite"
 interpreter = make_interpreter(model)
 interpreter.allocate_tensors()
-
-_NUM_KEYPOINTS = 17
 def det_pose(input):
     """
     takes an image as input and returns a tensor of detected bodypoints in the image.
@@ -63,7 +61,6 @@ def det_pose(input):
     common.set_input(interpreter, resized_img)
 
     interpreter.invoke()
-
     pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
     return pose
 
@@ -102,7 +99,7 @@ class Baloon():
         self.x += self.v
 
 def line(p1,p2):
-    pygame.draw.line(screen, WHITE, p1[:-1], p2[:-1])
+    pygame.draw.line(screen, WHITE, (int(p1[0]),int(p1[1])), (int(p2[0]),int(p2[1])))
 
 
 # define a video capture object
@@ -110,7 +107,7 @@ vid = cv2.VideoCapture(1)
 # Game loop
 running = True
 baloon = Baloon()
-g = (0,0.5)
+g = (0,1)
 
 while running:
     screen.fill(BLACK)
@@ -125,7 +122,14 @@ while running:
     
         pygame.draw.circle(screen, RED, (int(p[0]), int(p[1])), 5)
 
+    line(pose[rightShoulder],pose[leftShoulder])
+    line(pose[rightShoulder],pose[rightElbow])
+    line(pose[rightElbow],pose[rightWrist])
+    line(pose[leftShoulder],pose[leftElbow])
+    line(pose[leftElbow],pose[leftWrist])
 
+    line(pose[leftShoulder],pose[leftElbow])
+    line(pose[leftShoulder],pose[leftElbow])
     #line(pose[rightShoulder],pose[leftShoulder])
 
     # Handle events
@@ -137,8 +141,10 @@ while running:
     mouse = pygame.mouse.get_pos()
 
     # Bounce balloon if it hits the mouse
-    baloon.bounce((int(pose[10][0]),int(pose[10][1])))
-    baloon.bounce(pose[9])
+    baloon.bounce(pose[10][:2])
+    baloon.bounce(pose[9][:2])
+    baloon.bounce(pose[8][:2])
+    baloon.bounce(pose[7][:2])
     baloon.update()
     baloon.show()
 
