@@ -120,7 +120,7 @@ while running:
     ret, inp = vid.read()
     #POSE DETECTION
     pose = det_pose(inp)
-    pose[:,0] ,pose[:,1] = pose[:,0]* height ,pose[:,1] *width
+    pose[:,1] ,pose[:,0] = pose[:,0]* height ,pose[:,1] *width
     for p in pose:
     
         pygame.draw.circle(screen, RED, (int(p[0]), int(p[1])), 5)
@@ -137,8 +137,8 @@ while running:
     mouse = pygame.mouse.get_pos()
 
     # Bounce balloon if it hits the mouse
-    baloon.bounce((int(width * pose[10][1]),int(height * pose[10][0])))
-    baloon.bounce((int(width * pose[9][1]),int(height * pose[9][0])))
+    baloon.bounce((int(pose[10][0]),int(pose[10][1])))
+    baloon.bounce(pose[9])
     baloon.update()
     baloon.show()
 
