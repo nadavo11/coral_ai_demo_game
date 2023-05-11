@@ -94,21 +94,18 @@ class Baloon():
             self.v *= [-1, 1]
 
     def update(self):
-<<<<<<< HEAD
+
         self.bounce(pose[rightShoulder])
         self.bounce(pose[leftShoulder])
-=======
+
         self.bounce(pose[rightShoulder][:2])
         self.bounce(pose[leftShoulder][:2])
->>>>>>> 643ed811754af9140064fce2824dca18b5a06d20
+
         self.bounce(pose[rightElbow])
         self.bounce(pose[leftElbow])
         self.bounce(pose[rightKnee])
         self.bounce(pose[leftKnee])
-<<<<<<< HEAD
-        
-=======
->>>>>>> 643ed811754af9140064fce2824dca18b5a06d20
+
         self.bounce(pose[rightAnkle])
         self.bounce(pose[leftAnkle])
         self.bounce(pose[nose])
@@ -165,10 +162,9 @@ def update():
     baloon.update()
     baloon.show()
     # Update the display
-<<<<<<< HEAD
-=======
 
->>>>>>> 643ed811754af9140064fce2824dca18b5a06d20
+
+
 
 # define a video capture object
 vid = cv2.VideoCapture(1)
@@ -186,23 +182,22 @@ while running:
     # Capture the video frame
     # by frame
     ret, frame = vid.read()
-<<<<<<< HEAD
+
     print(ret)
     if ret:
       pose = get_pose(frame)
       update()
-=======
+
     
     pose = get_pose(frame)
     update()
     pygame.display.flip()
 
 
->>>>>>> 643ed811754af9140064fce2824dca18b5a06d20
 
     
-      baloon.update()
-      baloon.show()
+    baloon.update()
+    baloon.show()
 
     pygame.display.flip()
 
