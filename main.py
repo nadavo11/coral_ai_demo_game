@@ -8,7 +8,6 @@ from pycoral.utils.edgetpu import make_interpreter
 from PIL import Image
 from pygame.locals import *
 
-global _SCORE
 
 _SCORE = 0
 os.environ["DISPLAY"] = ":0"
@@ -77,6 +76,7 @@ class Baloon():
     def bounce(self,loc):
         dist = np.linalg.norm(self.x - loc[:2])
         if dist-np.linalg.norm(self.v) < self.radius:
+            global _SCORE
             self.v +=  0.3 * (self.x - loc[:2])
             _SCORE +=1
         return 0
