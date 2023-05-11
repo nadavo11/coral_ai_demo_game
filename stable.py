@@ -7,12 +7,12 @@ from pycoral.utils.edgetpu import make_interpreter
 from PIL import Image
 from pygame.locals import *
 
-flags = FULLSCREEN | DOUBLEBUF
-screen = pygame.display.set_mode([width,height], flags, 16)
+import os
 
 # Initialize Pygame
 #pygame.init()
-
+os.environ["DISPLAY"] = ":0"
+pygame.display.init()
 # Set up the display
 width, height = 1200, 900
 screen = pygame.display.set_mode((width, height))
@@ -73,9 +73,9 @@ class Baloon():
         self.v = np.array([0.1,0])
 
     def bounce(self,loc):
-        dist = np.linalg.norm(self.x - loc)
+        dist = np.linalg.norm(self.x - loc[:2])
         if dist < self.radius + 10:
-            self.v +=  0.3 * (self.x - loc)
+            self.v +=  0.3 * (self.x - loc[:2])
         return 0
 
     def show(self):
