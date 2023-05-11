@@ -6,8 +6,10 @@ import cv2
 from pycoral.adapters import common
 from pycoral.utils.edgetpu import make_interpreter
 from PIL import Image
+from pygame.locals import *
 
 os.environ["DISPLAY"] = ":0"
+flags = FULLSCREEN | DOUBLEBUF
 
 # Initialize Pygame
 #pygame.init()
@@ -70,12 +72,12 @@ class Baloon():
 
         self.radius = 40
         self.x = np.array([width / 2,height / 2])
-        self.v = np.array([0.1,0])
+        self.v = np.array([0.1,2])
 
     def bounce(self,loc):
         dist = np.linalg.norm(self.x - loc)
-        if dist < self.radius:
-            self.v +=  0.9 * (self.x - loc)
+        if dist < self.radius + 20:
+            self.v +=  0.3 * (self.x - loc)
         return 0
 
     def show(self):
@@ -85,16 +87,17 @@ class Baloon():
     def update(self):
         # Check if balloon hits the ground
         if self.x[1] + self.radius >= height:
+            self.x[1] -= 6
             self.v *= [1, -1]
         if self.x[1] < 0:
             self.v *= [1, -0.5]
-            self.x[1] += 2
+            self.x[1] += 4
 
         if self.radius >= self.x[0] or self.x[0] >= width - self.radius:
             self.v *= [-1, 1]
 
         self.v += g
-        self.v *= 0.999
+        self.v *= 0.99
         # Move the balloon
         self.x += self.v
 
@@ -117,7 +120,7 @@ while running:
     ret, inp = vid.read()
     #POSE DETECTION
     pose = det_pose(inp)
-    pose[:,1] ,pose[:,0] = pose[:,0]* height ,pose[:,1] *width
+    pose[:,1] ,pose[:,0] = pose[:,0]* height ,(1-pose[:,1]) *width
     for p in pose:
     
         pygame.draw.circle(screen, RED, (int(p[0]), int(p[1])), 5)
@@ -128,23 +131,35 @@ while running:
     line(pose[leftShoulder],pose[leftElbow])
     line(pose[leftElbow],pose[leftWrist])
 
-    line(pose[leftShoulder],pose[leftElbow])
-    line(pose[leftShoulder],pose[leftElbow])
-    #line(pose[rightShoulder],pose[leftShoulder])
-
+    line(pose[rightHip], pose[leftHip])
+    line(pose[rightShoulder], pose[rightHip])
+    line(pose[rightKnee], pose[rightHip])
+    line(pose[leftShoulder], pose[leftHip])
+    line(pose[leftKnee], pose[leftHip])
+    line(pose[leftKnee],pose[leftAnkle])
+    line(pose[rightKnee], pose[rightAnkle])
+    
+    
+    pygame.draw.circle(screen, WHITE, (int(pose[0][0]), int(pose[0][1])), 30)
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
     # Get mouse position
-    mouse = pygame.mouse.get_pos()
+    #mouse = pygame.mouse.get_pos()
 
     # Bounce balloon if it hits the mouse
     baloon.bounce(pose[10][:2])
     baloon.bounce(pose[9][:2])
     baloon.bounce(pose[8][:2])
     baloon.bounce(pose[7][:2])
+    baloon.bounce(pose[15][:2])
+    baloon.bounce(pose[16][:2])
+    
+    baloon.bounce(pose[leftKnee][:2])
+    baloon.bounce(pose[rightKnee][:2])
+    
     baloon.update()
     baloon.show()
 
