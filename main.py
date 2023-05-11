@@ -121,12 +121,6 @@ def line(p1,p2):
     pygame.draw.line(screen, WHITE, (int(p1[0]),int(p1[1])), (int(p2[0]),int(p2[1])))
 
 
-# define a video capture object
-vid = cv2.VideoCapture(1)
-# Game loop
-running = True
-baloon = Baloon()
-g = (0,1)
 
 def draw_body(pose):
     for p in pose:
@@ -183,10 +177,8 @@ while running:
     # by frame
     ret, frame = vid.read()
 
-    print(ret)
-    if ret:
-      pose = get_pose(frame)
-      update()
+    pose = get_pose(frame)
+    update()
 
     
     pose = get_pose(frame)
