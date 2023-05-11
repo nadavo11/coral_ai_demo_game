@@ -259,7 +259,7 @@ while True :
     pygame.display.flip()
 
     # displaying frame
-    #key = cv2.waitKey(1)
+    key = cv2.waitKey(1)
     if key == ord('q'):
         break
 
