@@ -7,7 +7,7 @@ from pycoral.adapters import common
 from pycoral.utils.edgetpu import make_interpreter
 from PIL import Image
 from pygame.locals import *
-import threading
+from threading import Thread
 
 _SCORE = 0
 os.environ["DISPLAY"] = ":0"
