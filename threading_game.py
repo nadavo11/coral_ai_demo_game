@@ -9,6 +9,7 @@ from PIL import Image
 from pygame.locals import *
 from threading import Thread
 
+
 _SCORE = 0
 os.environ["DISPLAY"] = ":0"
 flags = FULLSCREEN | DOUBLEBUF
@@ -234,7 +235,6 @@ webcam_stream = WebcamStream(stream_id=1) # 0 id for main camera
 webcam_stream.start()
 # processing frames in input stream
 num_frames_processed = 0
-start = time.time()
 
 """______________________________________________________________________________
     *                                                                           *
@@ -263,5 +263,5 @@ while True :
     if key == ord('q'):
         break
 
-end = time.time()
+
 webcam_stream.stop() # stop the webcam stream
