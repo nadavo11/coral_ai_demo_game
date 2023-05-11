@@ -42,7 +42,7 @@ leftKnee = 13
 rightKnee = 14
 leftAnkle = 15
 rightAnkle = 16
-#
+
 _NUM_KEYPOINTS = 17
 model = "movenet.tflite"
 interpreter = make_interpreter(model)
