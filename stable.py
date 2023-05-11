@@ -12,7 +12,7 @@ import os
 # Initialize Pygame
 #pygame.init()
 os.environ["DISPLAY"] = ":0"
-pygame.display.init()
+#pygame.display.init()
 # Set up the display
 width, height = 1200, 900
 screen = pygame.display.set_mode((width, height))
