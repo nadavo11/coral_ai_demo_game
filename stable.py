@@ -8,7 +8,7 @@ from PIL import Image
 from pygame.locals import *
 
 flags = FULLSCREEN | DOUBLEBUF
-screen = pygame.display.set_mode(resolution, flags, 16)
+screen = pygame.display.set_mode([width,height], flags, 16)
 
 # Initialize Pygame
 #pygame.init()
