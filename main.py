@@ -98,11 +98,12 @@ class Baloon():
         self.bounce(pose[rightShoulder])
         self.bounce(pose[leftShoulder])
 
-        self.bounce(pose[rightShoulder][:2])
-        self.bounce(pose[leftShoulder][:2])
+        self.bounce(pose[rightWrist])
+        self.bounce(pose[leftWrist])
 
         self.bounce(pose[rightElbow])
         self.bounce(pose[leftElbow])
+
         self.bounce(pose[rightKnee])
         self.bounce(pose[leftKnee])
 
