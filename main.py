@@ -130,7 +130,6 @@ g = (0,1)
 
 def draw_body(pose):
     for p in pose:
-    
         pygame.draw.circle(screen, RED, (int(p[0]), int(p[1])), 5)
 
     line(pose[rightShoulder],pose[leftShoulder])
@@ -153,7 +152,8 @@ def draw_body(pose):
 def get_pose(frame):
     #POSE DETECTION
     pose = det_pose(frame)
-    pose[:,1] ,pose[:,0] = pose[:,0]* height ,pose[:,1] *width
+    pose[:,1] ,pose[:,0] = pose[:,0]* height ,(1-pose[:,1]) *width
+    return pose
 
 def update():
     screen.fill(BLACK)

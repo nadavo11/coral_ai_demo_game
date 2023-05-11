@@ -85,7 +85,7 @@ class Baloon():
     def update(self):
         # Check if balloon hits the ground
         if self.x[1] + self.radius >= height:
-            self.x[1] += 4
+            self.x[1] -= 4
             self.v *= [1, -1]
         if self.x[1] < 0:
             self.v *= [1, -0.5]
@@ -135,8 +135,8 @@ while running:
     line(pose[leftKnee], pose[leftHip])
     line(pose[leftKnee],pose[leftAnkle])
     line(pose[rightKnee], pose[rightAnkle])
+    pygame.draw.circle(screen, WHITE, (int(pose[0][0]), int(pose[0][1])), 30)
 
-    pygame.draw.line
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -146,7 +146,17 @@ while running:
     #mouse = pygame.mouse.get_pos()
 
     # Bounce balloon if it hits the mouse
-    baloon.bounce(pose[9])
+    baloon.bounce(pose[rightShoulder])
+    baloon.bounce(pose[leftShoulder])
+    baloon.bounce(pose[rightKnee])
+    baloon.bounce(pose[leftKnee])
+    baloon.bounce(pose[rightElbow])
+    baloon.bounce(pose[leftElbow])
+    baloon.bounce(pose[rightAnkle])
+    baloon.bounce(pose[leftAnkle])
+    baloon.bounce(pose[nose])
+
+
     baloon.update()
     baloon.show()
 
