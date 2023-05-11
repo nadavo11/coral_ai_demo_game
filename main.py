@@ -8,6 +8,8 @@ from pycoral.utils.edgetpu import make_interpreter
 from PIL import Image
 from pygame.locals import *
 
+global _SCORE
+
 _SCORE = 0
 os.environ["DISPLAY"] = ":0"
 flags = FULLSCREEN | DOUBLEBUF
