@@ -8,7 +8,6 @@ from pycoral.utils.edgetpu import make_interpreter
 from PIL import Image
 from pygame.locals import *
 
-
 _SCORE = 0
 os.environ["DISPLAY"] = ":0"
 flags = FULLSCREEN | DOUBLEBUF
@@ -72,18 +71,18 @@ class Baloon():
         self.radius = 40
         self.x = np.array([width / 2,height / 2])
         self.v = np.array([0.1,2])
+        self.score = 0
 
     def bounce(self,loc):
         dist = np.linalg.norm(self.x - loc[:2])
         if dist-np.linalg.norm(self.v) < self.radius:
-            global _SCORE
             self.v +=  0.3 * (self.x - loc[:2])
-            _SCORE +=1
+            self.score += 1
         return 0
 
     def show(self):
         # Draw the balloon
-        pygame.draw.circle(screen, (_SCORE%200,60,(200 -_SCORE)%200), (int(baloon.x[0]),int(baloon.x[1])), baloon.radius)
+        pygame.draw.circle(screen, (150 - self.score,60,self.score), (int(baloon.x[0]),int(baloon.x[1])), baloon.radius)
 
     def wall_bounce(self):
         # Check if balloon hits the ground
