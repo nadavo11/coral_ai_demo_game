@@ -82,7 +82,7 @@ class Baloon():
 
     def show(self):
         # Draw the balloon
-        pygame.draw.circle(screen, (150 - self.score,60,self.score), (int(baloon.x[0]),int(baloon.x[1])), baloon.radius)
+        pygame.draw.circle(screen, (150 - (10 *self.score)%100 ,60,(10* self.score)%200), (int(baloon.x[0]),int(baloon.x[1])), baloon.radius)
 
     def wall_bounce(self):
         # Check if balloon hits the ground
