@@ -8,7 +8,7 @@ from PIL import Image
 from pygame.locals import *
 
 import os
-
+#
 os.environ["DISPLAY"] = ":0"
 flags = FULLSCREEN | DOUBLEBUF
 
