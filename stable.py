@@ -8,13 +8,13 @@ from PIL import Image
 from pygame.locals import *
 
 import os
-
-# Initialize Pygame
-#pygame.init()
+#
 os.environ["DISPLAY"] = ":0"
-#pygame.display.init()
+flags = FULLSCREEN | DOUBLEBUF
+
 # Set up the display
-width, height = 1200, 900
+width, height = 1400, 600
+
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Balloon Bounce")
 
