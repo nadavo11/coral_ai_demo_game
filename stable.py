@@ -118,7 +118,7 @@ while running:
     ret, inp = vid.read()
     #POSE DETECTION
     pose = det_pose(inp)
-    pose[:,1] ,pose[:,0] = pose[:,0]* height ,pose[:,1] *width
+    pose[:,1] ,pose[:,0] = pose[:,0]* height ,(1 - pose[:,1]) *width
     for p in pose:
         pygame.draw.circle(screen, RED, (int(p[0]), int(p[1])), 5)
 
