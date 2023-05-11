@@ -7,12 +7,6 @@ from pycoral.utils.edgetpu import make_interpreter
 from PIL import Image
 from pygame.locals import *
 
-flags = FULLSCREEN | DOUBLEBUF
-screen = pygame.display.set_mode(resolution, flags, 16)
-
-# Initialize Pygame
-#pygame.init()
-
 # Set up the display
 width, height = 1200, 900
 screen = pygame.display.set_mode((width, height))
@@ -74,7 +68,7 @@ class Baloon():
 
     def bounce(self,loc):
         dist = np.linalg.norm(self.x - loc)
-        if dist < self.radius + 10:
+        if dist-np.linalg.norm(self.v) < self.radius:
             self.v +=  0.3 * (self.x - loc)
         return 0
 
@@ -82,10 +76,10 @@ class Baloon():
         # Draw the balloon
         pygame.draw.circle(screen, RED, (int(baloon.x[0]),int(baloon.x[1])), baloon.radius)
 
-    def update(self):
+    def wall_bounce(self):
         # Check if balloon hits the ground
         if self.x[1] + self.radius >= height:
-            self.x[1] += 4
+            self.x[1] -= 4
             self.v *= [1, -1]
         if self.x[1] < 0:
             self.v *= [1, -0.5]
@@ -94,6 +88,19 @@ class Baloon():
         if self.radius >= self.x[0] or self.x[0] >= width - self.radius:
             self.v *= [-1, 1]
 
+    def update(self):
+        self.bounce(rightShoulder)
+        self.bounce(leftShoulder)
+        self.bounce(rightElbow)
+        self.bounce(leftElbow)
+        self.bounce(rightKnee)
+        self.bounce(leftKnee)
+        self.bounce(rightAnkle)
+        self.bounce(leftAnkle)
+        self.bounce(nose)
+
+
+        self.wall_bounce()
         self.v += g
         self.v *= 0.99
         # Move the balloon
@@ -103,22 +110,7 @@ def line(p1,p2):
     pygame.draw.line(screen, WHITE, (int(p1[0]),int(p1[1])), (int(p2[0]),int(p2[1])))
 
 
-# define a video capture object
-vid = cv2.VideoCapture(1)
-# Game loop
-running = True
-baloon = Baloon()
-g = (0,0.5)
-
-while running:
-    screen.fill(BLACK)
-
-    # Capture the video frame
-    # by frame
-    ret, inp = vid.read()
-    #POSE DETECTION
-    pose = det_pose(inp)
-    pose[:,1] ,pose[:,0] = pose[:,0]* height ,pose[:,1] *width
+def draw_body(pose):
     for p in pose:
         pygame.draw.circle(screen, RED, (int(p[0]), int(p[1])), 5)
 
@@ -136,22 +128,42 @@ while running:
     line(pose[leftKnee],pose[leftAnkle])
     line(pose[rightKnee], pose[rightAnkle])
 
-    pygame.draw.line
+def get_pose(frame):
+    #POSE DETECTION
+    pose = det_pose(frame)
+    pose[:,1] ,pose[:,0] = pose[:,0]* height ,pose[:,1] *width
+
+def update():
+    screen.fill(BLACK)
+    draw_body()
+    # Bounce balloon if it hits the mouse
+    baloon.update()
+    baloon.show()
+    # Update the display
+    pygame.display.flip()
+
+# define a video capture object
+vid = cv2.VideoCapture(1)
+# Game loop
+running = True
+baloon = Baloon()
+g = (0,0.5)
+
+while running:
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # Get mouse position
-    #mouse = pygame.mouse.get_pos()
+    # Capture the video frame
+    # by frame
+    ret, frame = vid.read()
+    pose = get_pose(frame)
+    update()
 
-    # Bounce balloon if it hits the mouse
-    baloon.bounce(pose[9])
-    baloon.update()
-    baloon.show()
 
-    # Update the display
-    pygame.display.flip()
+
+
 
 
 # Quit the game
