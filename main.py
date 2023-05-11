@@ -179,16 +179,6 @@ while running:
 
     pose = get_pose(frame)
     update()
-
-    
-    pose = get_pose(frame)
-    update()
-    pygame.display.flip()
-
-
-
-    
-    baloon.update()
     baloon.show()
 
     pygame.display.flip()
