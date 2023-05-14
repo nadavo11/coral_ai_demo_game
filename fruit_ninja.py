@@ -151,7 +151,7 @@ def update():
     # draw_body(pose)
     fruit.update()
     player.update()
-    baloon.show()
+    fruit.show()
     # Update the display
 
 running = True
