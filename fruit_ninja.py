@@ -51,7 +51,7 @@ interpreter = make_interpreter(model)
 interpreter.allocate_tensors()
 
 _DELTA = 50
-_P = 1/150
+_P = 1/50
 def det_pose(input):
     """
     takes an image as input and returns a tensor of detected bodypoints in the image.
@@ -116,8 +116,11 @@ class Player:
 
     def cut(self,i):
         line(self.hands_prev[i],self.hands[i])
+        # check each fruit for a hit
         for fruit in fruits:
-            if fruit.mask.overlap(self.mask, [int(h) for h in self.hands[i]] - [int(f) for f in fruit.x]):
+            if collide(line = [self.hand[i],self.hands_prev[i]],
+                       circle = [fruit.x,fruit.radius]) < fruit.radius:
+
                 fruit.cut()
 
 
@@ -133,6 +136,31 @@ class Player:
 def fruit_generator():
     if np.random.rand()< _P:
         fruits. append(Fruit())
+
+def collide(line, circle):
+    p1,p2 = line
+    center, rad = circle
+
+    # get length
+    length = np.linalg.norm(p2 -p1)
+
+    dot = np.dot((center-p1),(p2-p1))/ (length**2)
+
+    # closest point on the line
+    closest = p1 + dot * (p2 -p1)
+
+    s, t = min(p1[0], p2[0]), max(p1[0], p2[0])
+    #edge case
+    if t <closest[0]:
+        closest = t
+
+    elif s >closest[0]:
+        closest = s
+
+    dist = np.linalg.norm(center-closest)
+
+    return dist
+
 
 def draw_body(pose):
     for p in pose:
