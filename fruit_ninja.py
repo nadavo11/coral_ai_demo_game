@@ -112,7 +112,7 @@ class Player:
         self.hands_prev = [[0,0],[0,0]]
         #  hand location
         self.hands = [[0,0],[0,0]]
-        self.mask =  circleMask((255, 255, 255), self.radius)
+        self.mask =  circleMask((255, 255, 255), 5)
 
     def cut(self,i):
         line(self.hands_prev[i],self.hands[i])
