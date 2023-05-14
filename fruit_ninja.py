@@ -49,8 +49,8 @@ model = "movenet.tflite"
 interpreter = make_interpreter(model)
 interpreter.allocate_tensors()
 
-_DELTA = 60
-
+_DELTA = 50
+_P = 1/150
 def det_pose(input):
     """
     takes an image as input and returns a tensor of detected bodypoints in the image.
@@ -109,6 +109,7 @@ class Player:
     def cut(self,i):
         line(self.hands_prev[i],self.hands[i])
 
+
     def update(self):
         # save previous hand location
         self.hands_prev = self.hands
@@ -118,6 +119,9 @@ class Player:
             if np.linalg.norm(self.hands[i] - self.hands_prev[i]) > _DELTA:
                 self.cut(i)
 
+def fruit_generator():
+    if np.random.rand()< _P:
+        fruits. append(Fruit())
 
 def draw_body(pose):
     for p in pose:
@@ -152,16 +156,18 @@ def draw_hands():
 def update():
     screen.fill(BLACK)
     # draw_body(pose)
-    fruit.update()
+
+    fruit_generator()
+    for fruit in fruits:
+        fruit.update()
+        fruit.show()
+
     player.update()
     draw_hands()
-    fruit.show()
+
     # Update the display
 
-running = True
-fruit = Fruit()
-player = Player()
-g = (0, 0.5)
+
 """______________________________________________________________________________
     *                                                                           *
     *                                                                           *    
@@ -226,8 +232,13 @@ class WebcamStream:
 webcam_stream = WebcamStream(stream_id=1) # 0 id for main camera
 webcam_stream.start()
 # processing frames in input stream
-num_frames_processed = 0
 
+
+num_frames_processed = 0
+running = True
+fruits = []
+player = Player()
+g = (0, 0.5)
 """______________________________________________________________________________
     *                                                                           *
     *                                                                           *    
