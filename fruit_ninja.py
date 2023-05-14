@@ -111,7 +111,7 @@ class Player:
     def update(self):
         # save previous hand location
         self.hands_prev = self.hands
-        self.hands = [pose[rightWrist], pose[leftWrist]]
+        self.hands = [pose[rightWrist][:2], pose[leftWrist][:2]]
 
         for i in range(2):
             if np.linalg.norm(self.hands[i] - self.hands_prev[i]) > _DELTA:
