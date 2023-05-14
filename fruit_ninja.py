@@ -76,8 +76,8 @@ class Fruit():
     def __init__(self):
 
         self.radius = 40
-        self.x = np.array([width / 2, height / 2])
-        self.v = np.array([0.1, 2])
+        self.x = np.array([width / 2, height / 2]) + np.random.rand()
+        self.v = np.random.rand(2)*2 + np.array([-1,-4])
         self.mask = circleMask((255, 255, 255), self.radius) # (color), radius
         self.color = RED
 
