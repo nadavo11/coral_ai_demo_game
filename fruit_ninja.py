@@ -105,7 +105,7 @@ class Player:
         #  hand location
         self.hands = [0,0]
 
-    def cut(self):
+    def cut(self,i):
         line(self.hands_prev[i],self.hands[i])
 
     def update(self):
