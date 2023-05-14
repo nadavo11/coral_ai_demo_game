@@ -117,9 +117,7 @@ class Player:
     def cut(self,i):
         line(self.hands_prev[i],self.hands[i])
         for fruit in fruits:
-            print(int(fruit.x))
-            print(self.mask)
-            if fruit.mask.overlap(self.mask, int(self.hands[i]) - int(fruit.x)):
+            if fruit.mask.overlap(self.mask, [int(h) for h in self.hands[i]] - [int(f) for f in fruit.x]):
                 fruit.cut()
 
 
