@@ -96,7 +96,7 @@ class Fruit():
         self.v *= 0.99
         # Move the balloon
         self.x += self.v
-        if self.x>height:
+        if self.x[0]>height:
             del self
 
 
