@@ -101,9 +101,9 @@ def line(p1, p2):
 class Player:
     def __init__(self):
         #previous hand location
-        self.hands_prev = [0,0]
+        self.hands_prev = [[0,0],[0,0]]
         #  hand location
-        self.hands = [0,0]
+        self.hands = [[0,0],[0,0]]
 
     def cut(self,i):
         line(self.hands_prev[i],self.hands[i])
