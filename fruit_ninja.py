@@ -49,7 +49,7 @@ model = "movenet.tflite"
 interpreter = make_interpreter(model)
 interpreter.allocate_tensors()
 
-_DELTA = 14
+_DELTA = 35
 
 def det_pose(input):
     """
@@ -154,6 +154,7 @@ def update():
     # draw_body(pose)
     fruit.update()
     player.update()
+    draw_hands()
     fruit.show()
     # Update the display
 
