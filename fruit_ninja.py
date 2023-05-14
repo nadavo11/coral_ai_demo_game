@@ -25,6 +25,7 @@ pygame.display.set_caption("Balloon Bounce")
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (180, 40, 40)
+GREEN = (40,160,40)
 
 nose = 0
 leftEye = 1
@@ -77,15 +78,16 @@ class Fruit():
         self.radius = 40
         self.x = np.array([width / 2, height / 2])
         self.v = np.array([0.1, 2])
-
+        self.mask = circleMask((255, 255, 255), self.radius) # (color), radius
+        self.color = RED
 
     def show(self):
         # Draw the balloon
-        pygame.draw.circle(screen, RED,
+        pygame.draw.circle(screen, self.color,
                            (int(self.x[0]), int(self.x[1])), self.radius)
 
     def cut(self):
-        pass
+        self.color = GREEN
         # TODO remove from ram
 
     def update(self):
@@ -99,15 +101,24 @@ class Fruit():
 def line(p1, p2):
     pygame.draw.line(screen, WHITE, (int(p1[0]), int(p1[1])), (int(p2[0]), int(p2[1])))
 
+def circleMask(color, radius):
+    shape_surf = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA)
+    pygame.draw.circle(shape_surf, color, (radius, radius), radius)
+    return pygame.mask.from_surface(shape_surf)
+
 class Player:
     def __init__(self):
         #previous hand location
         self.hands_prev = [[0,0],[0,0]]
         #  hand location
         self.hands = [[0,0],[0,0]]
+        self.mask =  circleMask((255, 255, 255), self.radius)
 
     def cut(self,i):
         line(self.hands_prev[i],self.hands[i])
+        for fruit in fruits:
+            if fruit.mask.overlap(self.mask, hands[i]):
+                fruit.cut()
 
 
     def update(self):
