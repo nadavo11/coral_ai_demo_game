@@ -118,7 +118,7 @@ class Player:
         line(self.hands_prev[i],self.hands[i])
         # check each fruit for a hit
         for fruit in fruits:
-            if collide(line = [self.hand[i],self.hands_prev[i]],
+            if collide(line = [self.hands[i],self.hands_prev[i]],
                        circle = [fruit.x,fruit.radius]) < fruit.radius:
 
                 fruit.cut()
