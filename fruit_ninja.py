@@ -50,7 +50,7 @@ model = "movenet.tflite"
 interpreter = make_interpreter(model)
 interpreter.allocate_tensors()
 
-_DELTA = 50
+_DELTA = 42
 _P = 1/40
 def det_pose(input):
     """
