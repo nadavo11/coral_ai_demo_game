@@ -49,7 +49,7 @@ model = "movenet.tflite"
 interpreter = make_interpreter(model)
 interpreter.allocate_tensors()
 
-_DELTA = 4
+_DELTA = 14
 
 def det_pose(input):
     """
@@ -145,7 +145,9 @@ def get_pose(frame):
     pose = det_pose(frame)
     pose[:, 1], pose[:, 0] = pose[:, 0] * height, (1 - pose[:, 1]) * width
     return pose
-
+def draw_hands():
+    pygame.draw.circle(screen, RED, (int(pose[leftWrist][0]), int(pose[leftWrist][1])), 5)
+    pygame.draw.circle(screen, RED, (int(pose[rightWrist][0]), int(pose[rightWrist][1])), 5)
 
 def update():
     screen.fill(BLACK)
