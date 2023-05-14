@@ -96,6 +96,8 @@ class Fruit():
         self.v *= 0.99
         # Move the balloon
         self.x += self.v
+        if self.x>height:
+            del self
 
 
 def line(p1, p2):
@@ -135,7 +137,7 @@ class Player:
 
 def fruit_generator():
     if np.random.rand()< _P:
-        fruits. append(Fruit())
+        fruits.append(Fruit())
 
 def collide(line, circle):
     p1,p2 = line
