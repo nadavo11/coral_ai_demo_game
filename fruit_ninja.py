@@ -78,10 +78,11 @@ class Fruit():
         self.x = np.array([width / 2, height / 2])
         self.v = np.array([0.1, 2])
 
+
     def show(self):
         # Draw the balloon
-        pygame.draw.circle(screen, (150 - (10 * self.score) % 100, 60, (10 * self.score) % 200),
-                           (int(baloon.x[0]), int(baloon.x[1])), baloon.radius)
+        pygame.draw.circle(screen, RED,
+                           (int(self.x[0]), int(self.x[1])), self.radius)
 
     def cut(self):
         pass
