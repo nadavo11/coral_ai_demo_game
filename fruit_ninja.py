@@ -201,7 +201,7 @@ def update():
     for fruit in fruits:
         fruit.update()
         fruit.show()
-        if fruit.x[0] > height:
+        if fruit.x[0] > height-10:
             del fruit
     player.update()
     draw_hands()
