@@ -114,7 +114,7 @@ class Player:
         self.hands = [pose[rightWrist], pose[leftWrist]]
 
         for i in range(2):
-            if np.linalg.norm(self.hands[i] - self.hands_prev[i]) > delta:
+            if np.linalg.norm(self.hands[i] - self.hands_prev[i]) > _DELTA:
                 self.cut(i)
 
 
