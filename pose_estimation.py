@@ -60,42 +60,42 @@ def line(p1, p2):
     pygame.draw.line(screen, WHITE, (int(p1[0]), int(p1[1])), (int(p2[0]), int(p2[1])))
 
 def det_pose(input):
-    def det_pose(input):
-        """
-        takes an image as input and returns a tensor of detected bodypoints in the image.
-        A pose is a set of keypoints that represent the position and orientation of a person or an object.
-        Each keypoint is a tuple of (x, y), *relative* coordinates of the keypoint,
-        The function uses a pre-trained model to perform pose estimation on the image.
-        :param input: img
-        :return:
-        """
 
-        img = Image.fromarray(input)
-        resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
-        common.set_input(interpreter, resized_img)
+    """
+    takes an image as input and returns a tensor of detected bodypoints in the image.
+    A pose is a set of keypoints that represent the position and orientation of a person or an object.
+    Each keypoint is a tuple of (x, y), *relative* coordinates of the keypoint,
+    The function uses a pre-trained model to perform pose estimation on the image.
+    :param input: img
+    :return:
+    """
 
-        interpreter.invoke()
-        pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
+    img = Image.fromarray(input)
+    resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
+    common.set_input(interpreter, resized_img)
 
-
+    interpreter.invoke()
+    pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
 
 
-        draw = ImageDraw.Draw(img)
-        width, height = img.size
-        for i in range(0, _NUM_KEYPOINTS):
-            draw.ellipse(
-                xy=[
-                    pose[i][1] * width - 2, pose[i][0] * height - 2,
-                    pose[i][1] * width + 2, pose[i][0] * height + 2
-                ],
-                fill=(255, 0, 0))
 
 
-        #img.save(args.output)
-        #img.save(args.output)
-        #print('Done. Results saved at', args.output)
+    draw = ImageDraw.Draw(img)
+    width, height = img.size
+    for i in range(0, _NUM_KEYPOINTS):
+        draw.ellipse(
+            xy=[
+                pose[i][1] * width - 2, pose[i][0] * height - 2,
+                pose[i][1] * width + 2, pose[i][0] * height + 2
+            ],
+            fill=(255, 0, 0))
 
-        return np.array(img)
+
+    #img.save(args.output)
+    #img.save(args.output)
+    #print('Done. Results saved at', args.output)
+
+    return np.array(img)
 
 
 import cv2
