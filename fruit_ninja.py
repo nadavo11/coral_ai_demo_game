@@ -96,8 +96,7 @@ class Fruit():
         self.v *= 0.99
         # Move the balloon
         self.x += self.v
-        if self.x[0]>height:
-            del self
+
 
 
 def line(p1, p2):
@@ -202,9 +201,11 @@ def update():
     for fruit in fruits:
         fruit.update()
         fruit.show()
-
+        if fruit.x[0] > height:
+            del fruit
     player.update()
     draw_hands()
+
 
     # Update the display
 
