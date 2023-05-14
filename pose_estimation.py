@@ -55,8 +55,11 @@ leftAnkle = 15
 rightAnkle = 16
 
 RED = (200,20,20)
+model = "movenet.tflite"
 interpreter = make_interpreter(model)
 interpreter.allocate_tensors()
+
+
 def line(p1, p2):
     pygame.draw.line(screen, WHITE, (int(p1[0]), int(p1[1])), (int(p2[0]), int(p2[1])))
 
