@@ -37,65 +37,82 @@ from pycoral.utils.edgetpu import make_interpreter
 import numpy as np
 _NUM_KEYPOINTS = 17
 
+RED = (200,20,20)
+
+def line(p1, p2):
+    pygame.draw.line(screen, WHITE, (int(p1[0]), int(p1[1])), (int(p2[0]), int(p2[1])))
 
 def det_pose(input):
-    parser = argparse.ArgumentParser(
-      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument(
-      '-m', '--model', required=True, help='File path of .tflite file.')
-    args = parser.parse_args()
+    def det_pose(input):
+        """
+        takes an image as input and returns a tensor of detected bodypoints in the image.
+        A pose is a set of keypoints that represent the position and orientation of a person or an object.
+        Each keypoint is a tuple of (x, y), *relative* coordinates of the keypoint,
+        The function uses a pre-trained model to perform pose estimation on the image.
+        :param input: img
+        :return:
+        """
+
+        img = Image.fromarray(input)
+        resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
+        common.set_input(interpreter, resized_img)
+
+        interpreter.invoke()
+        pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
 
 
 
-    interpreter = make_interpreter(args.model)
-    interpreter.allocate_tensors()
-    img = Image.fromarray(inp)
-    resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
-    common.set_input(interpreter, resized_img)
 
-    interpreter.invoke()
-
-    pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
-
-
-    print(pose)
-    draw = ImageDraw.Draw(img)
-    width, height = img.size
-    for i in range(0, _NUM_KEYPOINTS):
-        draw.ellipse(
-            xy=[
-                pose[i][1] * width - 2, pose[i][0] * height - 2,
-                pose[i][1] * width + 2, pose[i][0] * height + 2
-            ],
-            fill=(255, 0, 0))
-
-        for i in range(9,11):
+        draw = ImageDraw.Draw(img)
+        width, height = img.size
+        for i in range(0, _NUM_KEYPOINTS):
             draw.ellipse(
-            xy=[
-                pose[i][1] * width - 2, pose[i][0] * height - 2,
-                pose[i][1] * width + 2, pose[i][0] * height + 2
-            ],
-            fill=(0, 255, 0))
-    #img.save(args.output)
-    #img.save(args.output)
-    #print('Done. Results saved at', args.output)
-    img.save("outo.jpg")
-    return np.array(img)
+                xy=[
+                    pose[i][1] * width - 2, pose[i][0] * height - 2,
+                    pose[i][1] * width + 2, pose[i][0] * height + 2
+                ],
+                fill=(255, 0, 0))
+
+
+        #img.save(args.output)
+        #img.save(args.output)
+        #print('Done. Results saved at', args.output)
+
+        return np.array(img)
 
 
 import cv2
 
 # define a video capture object
 vid = cv2.VideoCapture(1)
+def draw_body(pose):
+
+
+    cv2.line(pose[rightShoulder], pose[leftShoulder],RED,thickness = 4)
+    cv2.line(pose[rightShoulder], pose[rightElbow],RED,thickness = 4)
+    cv2.line(pose[rightElbow], pose[rightWrist],RED,thickness = 4)
+    cv2.line(pose[leftShoulder], pose[leftElbow],RED,thickness = 4)
+    cv2.line(pose[leftElbow], pose[leftWrist],RED,thickness = 4)
+
+    cv2.line(pose[rightHip], pose[leftHip],RED,thickness = 4)
+    cv2.line(pose[rightShoulder], pose[rightHip],RED,thickness = 4)
+    cv2.line(pose[rightKnee], pose[rightHip],RED,thickness = 4)
+    cv2.line(pose[leftShoulder], pose[leftHip],RED,thickness = 4)
+    cv2.line(pose[leftKnee], pose[leftHip],RED,thickness = 4)
+    cv2.line(pose[leftKnee], pose[leftAnkle],RED,thickness = 4)
+    cv2.line(pose[rightKnee], pose[rightAnkle],RED,thickness = 4)
+
+
 
 while (True):
 
     # Capture the video frame
     # by frame
     ret, inp = vid.read()
-
+    pose = det_pose(inp)
+    draw_body(pose)
     # Display the resulting frame
-    cv2.imshow('output',det_pose(inp))
+    cv2.imshow('output',pose)
 
     # the 'q' button is set as the
     # quitting button you may use any
