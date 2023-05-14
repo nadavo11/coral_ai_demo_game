@@ -109,19 +109,19 @@ vid = cv2.VideoCapture(1)
 def draw_body(pose):
 
 
-    cv2.line(pose[rightShoulder], pose[leftShoulder],RED,thickness = 4)
-    cv2.line(pose[rightShoulder], pose[rightElbow],RED,thickness = 4)
-    cv2.line(pose[rightElbow], pose[rightWrist],RED,thickness = 4)
-    cv2.line(pose[leftShoulder], pose[leftElbow],RED,thickness = 4)
-    cv2.line(pose[leftElbow], pose[leftWrist],RED,thickness = 4)
+    cv2.line(pose[rightShoulder], pose[leftShoulder],color= RED,thickness = 4)
+    cv2.line(pose[rightShoulder], pose[rightElbow],color= RED,thickness = 4)
+    cv2.line(pose[rightElbow], pose[rightWrist],color= RED,thickness = 4)
+    cv2.line(pose[leftShoulder], pose[leftElbow],color= RED,thickness = 4)
+    cv2.line(pose[leftElbow], pose[leftWrist],color= RED,thickness = 4)
 
-    cv2.line(pose[rightHip], pose[leftHip],RED,thickness = 4)
-    cv2.line(pose[rightShoulder], pose[rightHip],RED,thickness = 4)
-    cv2.line(pose[rightKnee], pose[rightHip],RED,thickness = 4)
-    cv2.line(pose[leftShoulder], pose[leftHip],RED,thickness = 4)
-    cv2.line(pose[leftKnee], pose[leftHip],RED,thickness = 4)
-    cv2.line(pose[leftKnee], pose[leftAnkle],RED,thickness = 4)
-    cv2.line(pose[rightKnee], pose[rightAnkle],RED,thickness = 4)
+    cv2.line(pose[rightHip], pose[leftHip],color= RED,thickness = 4)
+    cv2.line(pose[rightShoulder], pose[rightHip],color= RED,thickness = 4)
+    cv2.line(pose[rightKnee], pose[rightHip],color= RED,thickness = 4)
+    cv2.line(pose[leftShoulder], pose[leftHip],color= RED,thickness = 4)
+    cv2.line(pose[leftKnee], pose[leftHip],color= RED,thickness = 4)
+    cv2.line(pose[leftKnee], pose[leftAnkle],color= RED,thickness = 4)
+    cv2.line(pose[rightKnee], pose[rightAnkle],color= RED,thickness = 4)
 
 
 
