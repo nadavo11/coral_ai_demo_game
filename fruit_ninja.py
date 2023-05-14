@@ -51,7 +51,7 @@ interpreter = make_interpreter(model)
 interpreter.allocate_tensors()
 
 _DELTA = 50
-_P = 1/150
+_P = 1/40
 def det_pose(input):
     """
     takes an image as input and returns a tensor of detected bodypoints in the image.
@@ -76,8 +76,8 @@ class Fruit():
     def __init__(self):
 
         self.radius = 40
-        self.x = np.array([width / 2, height / 2]) + np.random.rand()
-        self.v = np.random.rand(2)*np.array([6,-6]) + np.array([-3,-5])
+        self.x = np.array([width / 2 - 50, height / 2]) + np.random.rand(2)*100
+        self.v = np.random.rand(2)*np.array([16,-16]) + np.array([-8,-5])
         self.mask = circleMask((255, 255, 255), self.radius) # (color), radius
         self.color = RED
 
