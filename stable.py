@@ -262,12 +262,11 @@ while True :
     #windowSurface = pygame.display.set_mode((width, height), 0, 32)
 
 
-    surf = pygame.surfarray.make_surface(frame)
-    screen.blit(surf,(0,0))
+    surf = pygame.surfarray.make_surface(cv2.cvtColor(frame.T[-1::-1],cv2.COLOR_BGR2RGB))
     pygame.display.flip()
-    if flag:
-        # displaying frame
-        cv2.imshow('output', frame[:, -1::-1])
+    screen.blit(surf,(0,0))
+
+
 
     key = cv2.waitKey(1)
 
