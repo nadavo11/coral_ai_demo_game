@@ -77,9 +77,10 @@ class Baloon():
         self.score = 0
 
     def bounce(self, loc):
-        dist = np.linalg.norm(self.x - loc[:2])
+        d = self.x - loc[:2]
+        dist = np.linalg.norm(d)
         if dist - np.linalg.norm(self.v) < self.radius+10:
-            self.v += 0.3 * (self.x - loc[:2])
+            self.v += 10 * (d)//abs(d)
             self.score += 1
 
         return 0
