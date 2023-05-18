@@ -210,7 +210,7 @@ class poseStream:
         while True:
             if self.stopped is True:
                 break
-            self.pose = det_pose(frame)
+            self.pose = det_pose(self.frame)
 
     # method to return latest read frame
     def detect(self):
