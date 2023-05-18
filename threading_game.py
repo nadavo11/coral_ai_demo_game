@@ -190,7 +190,7 @@ class poseStream:
         self.camStream = camStream
 
         # reading a single frame from vcap stream for initializing
-        frame = self.camStream.read()
+        self.frameframe = self.camStream.read()
         self.pose = det_pose(frame)
 
         # self.stopped is initialized to False
@@ -206,7 +206,7 @@ class poseStream:
 
     # method passed to thread to read next available frame
     def update(self):
-        frame = self.camStream.read()
+        self.frame = self.camStream.read()
         while True:
             if self.stopped is True:
                 break
@@ -214,7 +214,7 @@ class poseStream:
 
     # method to return latest read frame
     def detect(self):
-        return self.frame
+        return det_pose(self.frame)
 
     # method to stop reading frames
     def stop(self):
