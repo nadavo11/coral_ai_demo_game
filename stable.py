@@ -260,14 +260,14 @@ while True :
     baloon.show()
 
     pygame.display.flip()
-
+    screen.blit(frame)
 
     if flag:
         # displaying frame
         cv2.imshow('output', frame[:, -1::-1])
 
     key = cv2.waitKey(1)
-    
+
     if key == ord('a'):
         flag = not flag
 
