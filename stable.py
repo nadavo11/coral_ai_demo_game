@@ -270,7 +270,7 @@ while True :
     #print(frame.shape)
     #frame = cv2.transpose(frame)
     #frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-    surf = pygame.surfarray.make_surface(frame)
+    surf = pygame.surfarray.make_surface(frame.T)
     screen.blit(text, baloon.x)
     screen.blit(surf, (0,0))
     pygame.display.flip()
