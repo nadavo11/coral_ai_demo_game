@@ -260,7 +260,9 @@ while True :
     baloon.show()
 
     pygame.display.flip()
-    screen.blit(frame)
+    surf = pygame.surfarray.make_surface(frame)
+
+    screen.blit(surf)
 
     if flag:
         # displaying frame
