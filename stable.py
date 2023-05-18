@@ -273,7 +273,8 @@ while True :
 
     surf = pygame.surfarray.make_surface(frame)
     screen.blit(text, baloon.x)
-    screen.blit(surf, (0,0), area=20)
+    screen.blit(pygame.transform.scale(surf, (500, 500)), (0, 0))
+
     pygame.display.flip()
 
     events = pygame.event.get()
