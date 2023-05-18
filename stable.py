@@ -122,7 +122,7 @@ class Baloon():
         self.v += g
         self.v *= 0.99
         # Move the balloon
-        self.x += self.v
+        self.x += 4* self.v
 
 
 def line(p1, p2):
