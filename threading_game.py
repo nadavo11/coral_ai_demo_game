@@ -62,6 +62,7 @@ def det_pose(input):
     #while not flag:
     #    pass
     #flag = 0
+    print("det pose")
     img = Image.fromarray(input)
     resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
     common.set_input(interpreter, resized_img)
@@ -218,7 +219,6 @@ class poseStream:
             if self.stopped is True:
                 print(f'im {self.stopped}')
                 break
-            print(self.pose)
             self.pose = det_pose(self.frame)
 
 
