@@ -258,6 +258,7 @@ while True :
     pose = get_pose(frame)
     update()
     baloon.show()
+    pygame.display.flip()
     windowSurface = pygame.display.set_mode((width, height), 0, 32)
 
 
