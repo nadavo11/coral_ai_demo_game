@@ -215,6 +215,7 @@ class poseStream:
         print(self.pose)
         self.frame = self.camStream.read()
         while True:
+            print("im here")
             if self.stopped is True:
                 break
             self.pose = det_pose(self.frame)
