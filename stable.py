@@ -20,7 +20,7 @@ width, height = 1400, 600
 
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Balloon Bounce")
-
+pygame.init()
 # Set up colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
