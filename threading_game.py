@@ -133,6 +133,8 @@ def draw_body(pose):
     for p in pose:
         pygame.draw.circle(screen, RED, (int(p[0]), int(p[1])), 5)
 
+    mid_hip = (pose[leftHip] + pose[rightHip] )//2
+
     line(pose[rightShoulder], pose[leftShoulder])
     line(pose[rightShoulder], pose[rightElbow])
     line(pose[rightElbow], pose[rightWrist])
@@ -140,9 +142,9 @@ def draw_body(pose):
     line(pose[leftElbow], pose[leftWrist])
 
     line(pose[rightHip], pose[leftHip])
-    line(pose[rightShoulder], pose[rightHip])
+    line(pose[rightShoulder], mid_hip)
     line(pose[rightKnee], pose[rightHip])
-    line(pose[leftShoulder], pose[leftHip])
+    line(pose[leftShoulder], mid_hip)
     line(pose[leftKnee], pose[leftHip])
     line(pose[leftKnee], pose[leftAnkle])
     line(pose[rightKnee], pose[rightAnkle])
