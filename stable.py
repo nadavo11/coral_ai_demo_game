@@ -79,8 +79,9 @@ class Baloon():
     def bounce(self, loc):
         dist = np.linalg.norm(self.x - loc[:2])
         if dist - np.linalg.norm(self.v) < self.radius+10:
-            self.v += 0.3 * (self.x - loc[:2])
+            self.v += 0.15 * (self.x - loc[:2])
             self.score += 1
+
         return 0
 
     def show(self):
@@ -120,10 +121,9 @@ class Baloon():
 
         self.wall_bounce()
         self.v += g
-        self.v[0] = max(0.95*self.v[0] , MAX_VEL)
-        self.v[1] = max(0.95 * self.v[1], MAX_VEL)
+
         # Move the balloon
-        self.x += 3* self.v
+        self.x += 2.5* self.v
 
 
 def line(p1, p2):
