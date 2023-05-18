@@ -258,13 +258,12 @@ while True :
     pose = get_pose(frame)
     update()
     baloon.show()
-    pygame.display.flip()
-    windowSurface = pygame.display.set_mode((width, height), 0, 32)
+    #pygame.display.flip()
+    #windowSurface = pygame.display.set_mode((width, height), 0, 32)
 
 
     surf = pygame.surfarray.make_surface(frame)
-
-    windowSurface.blit(surf,(0,0))
+    screen.blit(surf,(0,0))
     pygame.display.flip()
     if flag:
         # displaying frame
