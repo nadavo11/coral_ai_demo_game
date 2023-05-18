@@ -46,6 +46,8 @@ rightAnkle = 16
 
 _NUM_KEYPOINTS = 17
 model = "movenet.tflite"
+
+# configuring interperter
 interpreter = make_interpreter(model)
 interpreter.allocate_tensors()
 def det_pose(input):
@@ -172,6 +174,53 @@ def update():
 running = True
 baloon = Baloon()
 g = (0, 0.5)
+
+"""______________________________________________________________________________
+    *                                                                           *
+    *                                                                           *    
+    *                      Pose detection thread                                *    
+    *                                                                           *       
+    *___________________________________________________________________________*   
+"""
+
+
+class poseStream:
+    # initialization method
+    def __init__(self, camStream):
+        self.camStream = camStream
+
+        # reading a single frame from vcap stream for initializing
+        frame = self.camStream.read()
+        self.pose = det_pose(frame)
+
+        # self.stopped is initialized to False
+        self.stopped = True
+        # thread instantiation
+        self.t = Thread(target=self.update, args=())
+        self.t.daemon = True  # daemon threads run in background
+
+    # method to start thread
+    def start(self):
+        self.stopped = False
+        self.t.start()
+
+    # method passed to thread to read next available frame
+    def update(self):
+        frame = self.camStream.read()
+        while True:
+            if self.stopped is True:
+                break
+            self.pose = det_pose(frame)
+
+    # method to return latest read frame
+    def detect(self):
+        return self.frame
+
+    # method to stop reading frames
+    def stop(self):
+        self.stopped = True
+
+
 """______________________________________________________________________________
     *                                                                           *
     *                                                                           *    
@@ -184,6 +233,7 @@ g = (0, 0.5)
 class WebcamStream:
     # initialization method
     def __init__(self, stream_id=1):
+
         self.stream_id = stream_id  # default is 1 for main camera
 
         # opening video capture stream
@@ -196,6 +246,7 @@ class WebcamStream:
 
         # reading a single frame from vcap stream for initializing
         self.grabbed, self.frame = self.vcap.read()
+
         if self.grabbed is False:
             print('[Exiting] No more frames to read')
             exit(0)
@@ -235,8 +286,12 @@ class WebcamStream:
 # initializing and starting multi-threaded webcam input stream
 webcam_stream = WebcamStream(stream_id=1) # 0 id for main camera
 webcam_stream.start()
-# processing frames in input stream
-num_frames_processed = 0
+
+
+# initializing and starting multi-threaded Pose detection output stream
+poseStream  = poseStream(webcam_stream)
+webcam_stream.start()
+
 
 """______________________________________________________________________________
     *                                                                           *
@@ -247,14 +302,11 @@ num_frames_processed = 0
 """
 
 while True :
-    if webcam_stream.stopped is True :
-        break
-    else :
-        frame = webcam_stream.read()
+
     """ --------------
     game handling
     --------------"""
-    pose = get_pose(frame)
+    pose = poseStream.detect()
     update()
     baloon.show()
 
