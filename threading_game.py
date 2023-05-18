@@ -8,7 +8,7 @@ from pycoral.utils.edgetpu import make_interpreter
 from PIL import Image
 from pygame.locals import *
 from threading import Thread
-
+from time import sleep
 
 _SCORE = 0
 os.environ["DISPLAY"] = ":0"
@@ -16,7 +16,7 @@ flags = FULLSCREEN | DOUBLEBUF
 
 # Set up the display
 width, height = 1400, 600
-
+flag=1
 
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Balloon Bounce")
@@ -59,12 +59,14 @@ def det_pose(input):
     :param input: img
     :return:
     """
-
+    #while not flag:
+    #    pass
     img = Image.fromarray(input)
     resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
     common.set_input(interpreter, resized_img)
 
     interpreter.invoke()
+
     pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
     return pose
 
@@ -77,6 +79,7 @@ class Baloon():
         self.x = np.array([width / 2, height / 2])
         self.v = np.array([0.1, 2])
         self.score = 0
+
 
     def bounce(self, loc):
         dist = np.linalg.norm(self.x - loc[:2])
@@ -198,6 +201,8 @@ class poseStream:
         # thread instantiation
         self.t = Thread(target=self.update, args=())
         self.t.daemon = True  # daemon threads run in background
+
+        sleep(2)
 
     # method to start thread
     def start(self):
