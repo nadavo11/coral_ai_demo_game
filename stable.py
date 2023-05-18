@@ -262,7 +262,7 @@ while True :
     pygame.display.flip()
     surf = pygame.surfarray.make_surface(frame)
 
-    screen.blit(surf)
+    screen.blit(surf,(0,0))
 
     if flag:
         # displaying frame
