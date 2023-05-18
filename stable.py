@@ -247,6 +247,7 @@ num_frames_processed = 0
 """
 
 while True :
+    flag = False
     if webcam_stream.stopped is True :
         break
     else :
@@ -259,10 +260,17 @@ while True :
     baloon.show()
 
     pygame.display.flip()
-    cv2.imshow('output',frame[:,-1::-1])
 
-    # displaying frame
+
+    if flag:
+        # displaying frame
+        cv2.imshow('output', frame[:, -1::-1])
+
     key = cv2.waitKey(1)
+    
+    if key == ord('a'):
+        flag = not flag
+
     if key == ord('q'):
         break
 
