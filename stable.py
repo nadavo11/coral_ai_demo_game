@@ -9,7 +9,7 @@ from PIL import Image
 from pygame.locals import *
 from threading import Thread
 
-
+MAX_VEL = 7
 _SCORE = 0
 os.environ["DISPLAY"] = ":0"
 flags = FULLSCREEN | DOUBLEBUF
@@ -120,7 +120,8 @@ class Baloon():
 
         self.wall_bounce()
         self.v += g
-        self.v = max(0.95*self.v , 7)
+        self.v[0] = max(0.95*self.v[0] , MAX_VEL)
+        self.v[1] = max(0.95 * self.v[1], MAX_VEL)
         # Move the balloon
         self.x += 3* self.v
 
