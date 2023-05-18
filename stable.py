@@ -258,7 +258,7 @@ while True :
     pose = get_pose(frame)
     update()
     baloon.show()
-    windowSurface = pygame.display.set_mode((200, 200), 0, 32)
+    windowSurface = pygame.display.set_mode((width, height), 0, 32)
 
 
     surf = pygame.surfarray.make_surface(frame)
