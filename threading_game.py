@@ -59,14 +59,15 @@ def det_pose(input):
     :param input: img
     :return:
     """
-    #while not flag:
-    #    pass
+    while not flag:
+        pass
+    flag = 0
     img = Image.fromarray(input)
     resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
     common.set_input(interpreter, resized_img)
 
     interpreter.invoke()
-
+    flag=1
     pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
     return pose
 
@@ -202,7 +203,7 @@ class poseStream:
         self.t = Thread(target=self.update, args=())
         self.t.daemon = True  # daemon threads run in background
 
-        sleep(2)
+        #sleep(2)
 
     # method to start thread
     def start(self):
