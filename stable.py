@@ -265,7 +265,7 @@ while True :
     frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
     surf = pygame.surfarray.make_surface(frame)
     pygame.display.flip()
-    #screen.blit(surf,(0,0))
+    screen.blit(surf,(0,0))
 
 
 
