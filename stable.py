@@ -279,8 +279,6 @@ while True :
         if event.type == KEYDOWN and event.key == K_d:
             baloon.v += [4,2]
 
-    if key == ord('q'):
-        break
 
 
 webcam_stream.stop() # stop the webcam stream
