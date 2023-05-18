@@ -259,6 +259,7 @@ while True :
     baloon.show()
 
     pygame.display.flip()
+    cv2.imshow('output',frame)
 
     # displaying frame
     key = cv2.waitKey(1)
