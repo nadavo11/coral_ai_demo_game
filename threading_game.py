@@ -290,7 +290,7 @@ webcam_stream.start()
 
 # initializing and starting multi-threaded Pose detection output stream
 poseStream  = poseStream(webcam_stream)
-webcam_stream.start()
+poseStream.start()
 
 
 """______________________________________________________________________________
