@@ -120,7 +120,7 @@ class Baloon():
 
         self.wall_bounce()
         self.v += g
-        self.v *= 0.99
+        self.v = max(0.95*self.v , 7)
         # Move the balloon
         self.x += 3* self.v
 
@@ -180,7 +180,6 @@ g = (0, 0.5)
     *___________________________________________________________________________*   
 """
 
-
 class WebcamStream:
     # initialization method
     def __init__(self, stream_id=1):
@@ -238,6 +237,12 @@ webcam_stream.start()
 # processing frames in input stream
 num_frames_processed = 0
 
+font = pygame.font.Font('freesansbold.ttf', 32)
+
+# create a text surface object,
+# on which text is drawn on it.
+text = font.render('IAI', True,WHITE)
+
 """______________________________________________________________________________
     *                                                                           *
     *                                                                           *    
@@ -247,7 +252,6 @@ num_frames_processed = 0
 """
 
 while True :
-    flag = False
     if webcam_stream.stopped is True :
         break
     else :
@@ -264,15 +268,13 @@ while True :
     #frame = cv2.transpose(frame)
     #frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
     surf = pygame.surfarray.make_surface(frame)
+    screen.blit(text, baloon.x)
     pygame.display.flip()
-    screen.blit(surf,(0,0))
 
-
-
-    key = cv2.waitKey(1)
-
-    if key == ord('a'):
-        flag = not flag
+    if event.type == KEYDOWN and event.key == K_a:
+        baloon.v += [-4,2]
+    if event.type == KEYDOWN and event.key == K_d:
+        baloon.v += [4,2]
 
     if key == ord('q'):
         break
