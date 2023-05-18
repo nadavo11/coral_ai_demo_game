@@ -124,7 +124,7 @@ class Baloon():
         self.v += g
 
         # Move the balloon
-        self.v *= 0.9
+        self.v *= 0.97
         self.x += 2.5* self.v
 
 
