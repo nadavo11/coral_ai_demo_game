@@ -190,8 +190,8 @@ class poseStream:
         self.camStream = camStream
 
         # reading a single frame from vcap stream for initializing
-        self.frameframe = self.camStream.read()
-        self.pose = det_pose(frame)
+        self.frame = self.camStream.read()
+        self.pose = det_pose(self.frame)
 
         # self.stopped is initialized to False
         self.stopped = True
