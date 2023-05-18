@@ -272,6 +272,7 @@ while True :
     #frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
     surf = pygame.surfarray.make_surface(frame)
     screen.blit(text, baloon.x)
+    screen.blit(surf, (0,0))
     pygame.display.flip()
 
     events = pygame.event.get()
