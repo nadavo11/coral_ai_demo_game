@@ -120,7 +120,7 @@ class Baloon():
 
         self.wall_bounce()
         self.v += g
-        self.v *= 0.85
+        self.v *= 0.99
         # Move the balloon
         self.x += 3* self.v
 
