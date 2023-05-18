@@ -205,7 +205,7 @@ class poseStream:
         self.t.start()
 
     # method passed to thread to read next available frame
-    def update(self):
+    def update(self,frame):
         print(self.pose)
         self.frame = self.camStream.read()
         while True:
@@ -216,7 +216,7 @@ class poseStream:
 
     # method to return latest read frame
     def detect(self):
-        return det_pose(self.frame)
+        return self.pose
 
     # method to stop reading frames
     def stop(self):
