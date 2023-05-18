@@ -59,15 +59,15 @@ def det_pose(input):
     :param input: img
     :return:
     """
-    while not flag:
-        pass
-    flag = 0
+    #while not flag:
+    #    pass
+    #flag = 0
     img = Image.fromarray(input)
     resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
     common.set_input(interpreter, resized_img)
 
     interpreter.invoke()
-    flag=1
+    #flag=1
     pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
     return pose
 
@@ -195,7 +195,7 @@ class poseStream:
 
         # reading a single frame from vcap stream for initializing
         self.frame = self.camStream.read()
-        self.pose = det_pose(self.frame)
+        #self.pose = det_pose(self.frame)
 
         # self.stopped is initialized to False
         self.stopped = True
@@ -297,7 +297,7 @@ webcam_stream.start()
 
 
 # initializing and starting multi-threaded Pose detection output stream
-poseStream  = poseStream(webcam_stream)
+poseStream = poseStream(webcam_stream)
 poseStream.start()
 
 
