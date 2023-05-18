@@ -272,10 +272,12 @@ while True :
     screen.blit(text, baloon.x)
     pygame.display.flip()
 
-    if event.type == KEYDOWN and event.key == K_a:
-        baloon.v += [-4,2]
-    if event.type == KEYDOWN and event.key == K_d:
-        baloon.v += [4,2]
+    events = pygame.event.get()
+    for event in events:
+        if event.type == KEYDOWN and event.key == K_a:
+            baloon.v += [-4,2]
+        if event.type == KEYDOWN and event.key == K_d:
+            baloon.v += [4,2]
 
     if key == ord('q'):
         break
