@@ -260,8 +260,9 @@ while True :
     baloon.show()
     #pygame.display.flip()
     #windowSurface = pygame.display.set_mode((width, height), 0, 32)
-
-    frame = cv2.cvtColor(frame.T[-1::-1],cv2.COLOR_BGR2RGB)
+    print(frame.shape)
+    frame = cv2.transpose(frame)
+    frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
     surf = pygame.surfarray.make_surface(frame)
     pygame.display.flip()
     screen.blit(surf,(0,0))
