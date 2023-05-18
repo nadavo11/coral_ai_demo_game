@@ -262,7 +262,7 @@ while True :
     #windowSurface = pygame.display.set_mode((width, height), 0, 32)
     print(frame.shape)
     frame = cv2.transpose(frame)
-    frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+    #frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
     surf = pygame.surfarray.make_surface(frame)
     pygame.display.flip()
     screen.blit(surf,(0,0))
