@@ -119,6 +119,7 @@ if save == True:
     *                                                                           *
     *___________________________________________________________________________*
 """
+model = "hand_landmark_full.tflite"
 interpreter = make_interpreter(model)
 interpreter.allocate_tensors()
 def det_pose(input):
@@ -146,27 +147,26 @@ def get_pose(frame):
     pose[:, 1], pose[:, 0] = pose[:, 0] * height, (1 - pose[:, 1]) * width
     return pose
 
-with HandLandmarker.create_from_options(options) as landmarker:
-    while (True):
+while (True):
 
-        # Capture the video frame
-        # by frame
-        frame = cv2.flip(webcam_stream.read(),1)
+    # Capture the video frame
+    # by frame
+    frame = cv2.flip(webcam_stream.read(),1)
 
-        pose = get_pose(frame)
-        print(pose)
+    pose = get_pose(frame)
+    print(pose)
 
 
-        # Display the resulting frame
-        cv2.imshow('output', frame)
-        if save:
-            out.write(frame)
+    # Display the resulting frame
+    cv2.imshow('output', frame)
+    if save:
+        out.write(frame)
 
-        # the 'q' button is set as the
-        # quitting button you may use any
-        # desired button of your choice
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+    # the 'q' button is set as the
+    # quitting button you may use any
+    # desired button of your choice
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
 # After the loop release the cap object
 webcam_stream.vcap.release()
