@@ -21,7 +21,7 @@ GREEN = (0, 255, 0)
 RED = (0, 0, 255)
 class WebcamStream:
     # initialization method
-    def __init__(self, stream_id=0):
+    def __init__(self, stream_id=1):
         self.stream_id = stream_id  # default is 1 for main camera
 
         # opening video capture stream
@@ -82,7 +82,7 @@ hands = mp.solutions.hands.Hands()
 drawing = mp.solutions.drawing_utils
 
 # initializing and starting multi-threaded webcam input stream
-webcam_stream = WebcamStream(stream_id=0) # 0 id for main camera
+webcam_stream = WebcamStream(stream_id=1) # 0 id for main camera
 webcam_stream.start()
 # processing frames in input stream
 num_frames_processed = 0
