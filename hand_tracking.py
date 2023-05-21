@@ -7,6 +7,7 @@ from threading import Thread
 from pycoral.adapters import common
 from pycoral.utils.edgetpu import make_interpreter
 import mediapipe as mp
+from PIL import Image
 
 """______________________________________________________________________________
     *                                                                           *
