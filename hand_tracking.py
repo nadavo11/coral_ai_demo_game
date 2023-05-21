@@ -9,6 +9,7 @@ from pycoral.utils.edgetpu import make_interpreter
 import mediapipe as mp
 from PIL import Image
 
+width, height = 1400, 600
 """______________________________________________________________________________
     *                                                                           *
     *                                                                           *
