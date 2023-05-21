@@ -138,7 +138,7 @@ def det_pose(input):
     common.set_input(interpreter, resized_img)
 
     interpreter.invoke()
-    pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
+    pose = common.output_tensor(interpreter, 0).copy().reshape(21, 3)
     return pose
 
 
