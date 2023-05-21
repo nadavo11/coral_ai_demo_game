@@ -8,7 +8,7 @@ from pycoral.adapters import common
 from pycoral.utils.edgetpu import make_interpreter
 import mediapipe as mp
 from PIL import Image
-
+import time
 width, height = 1400, 600
 """______________________________________________________________________________
     *                                                                           *
@@ -83,7 +83,7 @@ class WebcamStream:
 
 
 
-drawing = mp.solutions.drawing_utils
+#drawing = mp.solutions.drawing_utils
 
 # initializing and starting multi-threaded webcam input stream
 webcam_stream = WebcamStream(stream_id=1) # 0 id for main camera
@@ -149,6 +149,8 @@ def get_pose(frame):
     pose[:, 1], pose[:, 0] = pose[:, 0] * height, (1 - pose[:, 1]) * width
     return pose
 
+
+start_time = time.time()
 while (True):
 
     # Capture the video frame
@@ -158,11 +160,14 @@ while (True):
     pose = get_pose(frame)
     print(pose)
 
+    run_time  =  time.time()
+    print(run_time-start_time)
+    start_time = run_time
 
     # Display the resulting frame
-    cv2.imshow('output', frame)
-    if save:
-        out.write(frame)
+    #cv2.imshow('output', frame)
+    #if save:
+    #    out.write(frame)
 
     # the 'q' button is set as the
     # quitting button you may use any
