@@ -118,16 +118,32 @@ if save == True:
     *                                                                           *
     *___________________________________________________________________________*
 """
+interpreter = make_interpreter(model)
+interpreter.allocate_tensors()
+def det_pose(input):
+    """
+    takes an image as input and returns a tensor of detected bodypoints in the image.
+    A pose is a set of keypoints that represent the position and orientation of a person or an object.
+    Each keypoint is a tuple of (x, y), *relative* coordinates of the keypoint,
+    The function uses a pre-trained model to perform pose estimation on the image.
+    :param input: img
+    :return:
+    """
 
-BaseOptions = mp.tasks.BaseOptions
-HandLandmarker = mp.tasks.vision.HandLandmarker
-HandLandmarkerOptions = mp.tasks.vision.HandLandmarkerOptions
-VisionRunningMode = mp.tasks.vision.RunningMode
+    img = Image.fromarray(input)
+    resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
+    common.set_input(interpreter, resized_img)
 
-# Create a hand landmarker instance with the image mode:
-options = HandLandmarkerOptions(
-    base_options=BaseOptions(model_asset_path='hand_landmark_full.tflite'),
-    running_mode=VisionRunningMode.IMAGE)
+    interpreter.invoke()
+    pose = common.output_tensor(interpreter, 0).copy().reshape(_NUM_KEYPOINTS, 3)
+    return pose
+
+
+def get_pose(frame):
+    # POSE DETECTION
+    pose = det_pose(frame)
+    pose[:, 1], pose[:, 0] = pose[:, 0] * height, (1 - pose[:, 1]) * width
+    return pose
 
 with HandLandmarker.create_from_options(options) as landmarker:
     while (True):
@@ -136,16 +152,9 @@ with HandLandmarker.create_from_options(options) as landmarker:
         # by frame
         frame = cv2.flip(webcam_stream.read(),1)
 
-        pose = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        pose = get_pose(frame)
+        print(pose)
 
-
-        if pose.multi_hand_landmarks:
-            for hand_landmark in pose.multi_hand_landmarks:
-                drawing.draw_landmarks(frame,hand_landmark,connections=mp.solutions.hands.HAND_CONNECTIONS)
-                for i, mark in enumerate(hand_landmark.landmark):
-                    p[i,0], p[i,1],p[i,2] = mark.x * HEIGHT, mark.y * WIDTH , mark.z * HEIGHT
-
-                cv2.putText(frame, txt, (int(p[10,0]),int(p[10,1])), cv2.FONT_HERSHEY_SIMPLEX, 1,color, 2, cv2.LINE_AA)
 
         # Display the resulting frame
         cv2.imshow('output', frame)
