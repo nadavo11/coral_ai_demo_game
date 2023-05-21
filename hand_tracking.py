@@ -1,4 +1,3 @@
-
 import os
 import cv2
 import numpy as np
@@ -19,6 +18,7 @@ OPENCV_LOG_LEVEL=0
 WIDTH, HEIGHT = 1080, 1920
 GREEN = (0, 255, 0)
 RED = (0, 0, 255)
+
 class WebcamStream:
     # initialization method
     def __init__(self, stream_id=1):
@@ -78,7 +78,8 @@ class WebcamStream:
         self.stopped = True
 
 
-hands = mp.solutions.hands.Hands()
+
+
 drawing = mp.solutions.drawing_utils
 
 # initializing and starting multi-threaded webcam input stream
@@ -117,52 +118,45 @@ if save == True:
     *                                                                           *
     *___________________________________________________________________________*
 """
-while (True):
 
-    # Capture the video frame
-    # by frame
-    frame = cv2.flip(webcam_stream.read(),1)
+BaseOptions = mp.tasks.BaseOptions
+HandLandmarker = mp.tasks.vision.HandLandmarker
+HandLandmarkerOptions = mp.tasks.vision.HandLandmarkerOptions
+VisionRunningMode = mp.tasks.vision.RunningMode
 
-    pose = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+# Create a hand landmarker instance with the image mode:
+options = HandLandmarkerOptions(
+    base_options=BaseOptions(model_asset_path='hand_landmark_full.tflite'),
+    running_mode=VisionRunningMode.IMAGE)
 
+with HandLandmarker.create_from_options(options) as landmarker:
+    while (True):
 
-    if pose.multi_hand_landmarks:
-        for hand_landmark in pose.multi_hand_landmarks:
-            drawing.draw_landmarks(frame,hand_landmark,connections=mp.solutions.hands.HAND_CONNECTIONS)
-            for i, mark in enumerate(hand_landmark.landmark):
-                p[i,0], p[i,1],p[i,2] = mark.x * HEIGHT, mark.y * WIDTH , mark.z * HEIGHT
+        # Capture the video frame
+        # by frame
+        frame = cv2.flip(webcam_stream.read(),1)
 
-            if np.linalg.norm(p[10]-p[6]) > 1.3 * np.linalg.norm(p[9]-p[5]):
-                txt = "warning"
-                color = RED
-            else:
-                txt = "ok"
-                color = GREEN
-
-            cv2.putText(frame, txt, (int(p[10,0]),int(p[10,1])), cv2.FONT_HERSHEY_SIMPLEX, 1,color, 2, cv2.LINE_AA)
-
-            #
-            # for i, mark in enumerate (hand_landmark.landmark):
-            #
-            #     if i == 10:
-            #         print(frame.shape)
-            #         txt = "ok"
-            #         color = GREEN
-            #
-            #         cx, cy = int(mark.x * WIDTH), int(mark.y * HEIGHT)
-            #         cv2.putText(frame, txt,(cx,cy), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+        pose = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
 
-    # Display the resulting frame
-    cv2.imshow('output', frame)
-    if save:
-        out.write(frame)
+        if pose.multi_hand_landmarks:
+            for hand_landmark in pose.multi_hand_landmarks:
+                drawing.draw_landmarks(frame,hand_landmark,connections=mp.solutions.hands.HAND_CONNECTIONS)
+                for i, mark in enumerate(hand_landmark.landmark):
+                    p[i,0], p[i,1],p[i,2] = mark.x * HEIGHT, mark.y * WIDTH , mark.z * HEIGHT
 
-    # the 'q' button is set as the
-    # quitting button you may use any
-    # desired button of your choice
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+                cv2.putText(frame, txt, (int(p[10,0]),int(p[10,1])), cv2.FONT_HERSHEY_SIMPLEX, 1,color, 2, cv2.LINE_AA)
+
+        # Display the resulting frame
+        cv2.imshow('output', frame)
+        if save:
+            out.write(frame)
+
+        # the 'q' button is set as the
+        # quitting button you may use any
+        # desired button of your choice
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
 # After the loop release the cap object
 webcam_stream.vcap.release()
