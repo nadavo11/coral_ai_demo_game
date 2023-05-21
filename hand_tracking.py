@@ -4,7 +4,8 @@ import numpy as np
 #from PIL import Image
 #from pygame.locals import *
 from threading import Thread
-
+from pycoral.adapters import common
+from pycoral.utils.edgetpu import make_interpreter
 import mediapipe as mp
 
 """______________________________________________________________________________
