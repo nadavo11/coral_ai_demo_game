@@ -128,7 +128,7 @@ while (True):
 
     if pose.multi_hand_landmarks:
         for hand_landmark in pose.multi_hand_landmarks:
-            #drawing.draw_landmarks(frame,hand_landmark,connections=mp.solutions.hands.HAND_CONNECTIONS)
+            drawing.draw_landmarks(frame,hand_landmark,connections=mp.solutions.hands.HAND_CONNECTIONS)
             for i, mark in enumerate(hand_landmark.landmark):
                 p[i,0], p[i,1],p[i,2] = mark.x * HEIGHT, mark.y * WIDTH , mark.z * HEIGHT
 
