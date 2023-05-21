@@ -133,13 +133,14 @@ def det_pose(input):
     :param input: img
     :return:
     """
-
+    time1 = time.time()
     img = Image.fromarray(input)
     resized_img = img.resize(common.input_size(interpreter), Image.ANTIALIAS)
     common.set_input(interpreter, resized_img)
 
     interpreter.invoke()
     pose = common.output_tensor(interpreter, 0).copy().reshape(21, 3)
+    print("detection time:", time.time()-time1)
     return pose
 
 
