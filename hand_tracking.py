@@ -155,7 +155,7 @@ while (True):
 
     # Capture the video frame
     # by frame
-    frame = cv2.flip(webcam_stream.read(),1)
+    frame = webcam_stream.read()
 
     pose = get_pose(frame)
     print(pose)
