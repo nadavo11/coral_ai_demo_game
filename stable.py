@@ -171,7 +171,7 @@ def get_pose(frame):
 
 
 def update():
-    screen.fill(BLACK)
+    screen.blit(pygame.transform.scale(surf_back, (width, height)), (0, 0))
     draw_body(pose)
     # Bounce balloon if it hits the mouse
     baloon.update()
@@ -283,7 +283,7 @@ while True :
 
     surf = pygame.surfarray.make_surface(frame[-1::-1])
 
-    screen.blit(pygame.transform.scale(surf_back, (width, height)), (0, 0))
+    
 
     screen.blit(text, baloon.x)
     screen.blit(pygame.transform.scale(surf, (300, 300)), (0, 0))
