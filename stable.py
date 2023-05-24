@@ -44,7 +44,11 @@ rightKnee = 14
 leftAnkle = 15
 rightAnkle = 16
 
-background = pygame.image.load("background.jpg")
+
+# load and show an image with Pillow
+
+# Open the image form working directory
+background = Image.open('background.jpg')
 surf_back = pygame.surfarray.make_surface(background)
 screen.blit(pygame.transform.scale(surf_back, (height, width)), (0, 0))
 
