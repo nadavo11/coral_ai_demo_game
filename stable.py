@@ -46,7 +46,6 @@ rightAnkle = 16
 
 background = pygame.image.load("background.jpg")
 background = pygame.transform.scale(background, (height, width))
-screen.blit(pygame.transform.scale(background, (height, width)), (0, 0))
 
 _NUM_KEYPOINTS = 17
 model = "movenet.tflite"
@@ -259,7 +258,7 @@ text = font.render('IAI', True,WHITE)
 """
 
 while True :
-
+    screen.blit(pygame.transform.scale(background, (height, width)), (0, 0))
 
     if webcam_stream.stopped is True :
         break
