@@ -137,7 +137,7 @@ class Baloon():
 
 
 def line(p1, p2):
-    pygame.draw.line(screen, WHITE, (int(p1[0]), int(p1[1])), (int(p2[0]), int(p2[1])),width=3)
+    pygame.draw.line(screen, WHITE, (int(p1[0]), int(p1[1])), (int(p2[0]), int(p2[1])),2)
 
 
 def draw_body(pose):
