@@ -263,7 +263,6 @@ text = font.render('IAI', True,WHITE)
 """
 
 while True :
-    screen.blit(pygame.transform.scale(background, (height, width)), (0, 0))
 
     if webcam_stream.stopped is True :
         break
