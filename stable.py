@@ -289,7 +289,7 @@ while True :
     screen.blit(text, baloon.x)
 
 
-    screen.blit(pygame.transform.scale(surf, (300, 300)), (0, 0))
+    screen.blit(pygame.transform.scale(surf, (200, 200)), (0, 0))
 
     pygame.display.flip()
 
