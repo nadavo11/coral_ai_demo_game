@@ -48,7 +48,7 @@ rightAnkle = 16
 
 # Open the image form working directory
 background = Image.open('background.jpg')
-surf_back = pygame.surfarray.make_surface(np.array(background))
+surf_back = pygame.surfarray.make_surface(cv2.transpose(np.array(background)))
 screen.blit(pygame.transform.scale(surf_back, (height, width)), (0, 0))
 
 
