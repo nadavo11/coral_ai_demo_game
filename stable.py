@@ -288,7 +288,7 @@ while True :
 
 
     screen.blit(text, baloon.x)
-    screen.blit(text_score, np.array([width *4/5, height * 1/5]))
+    screen.blit(text_score, np.array([width *2/3, height * 1/6]))
 
     screen.blit(pygame.transform.scale(surf, (300, 300)), (0, 0))
 
