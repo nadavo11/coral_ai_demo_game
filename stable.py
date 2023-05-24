@@ -44,6 +44,10 @@ rightKnee = 14
 leftAnkle = 15
 rightAnkle = 16
 
+background = pygame.image.load("background.jpg")
+background = pygame.transform.scale(background, (height, width))
+screen.blit(pygame.transform.scale(background, (height, width)), (0, 0))
+
 _NUM_KEYPOINTS = 17
 model = "movenet.tflite"
 interpreter = make_interpreter(model)
@@ -255,6 +259,8 @@ text = font.render('IAI', True,WHITE)
 """
 
 while True :
+
+
     if webcam_stream.stopped is True :
         break
     else :
@@ -262,6 +268,7 @@ while True :
     """ --------------
     game handling
     --------------"""
+
     pose = get_pose(frame)
     update()
     baloon.show()
