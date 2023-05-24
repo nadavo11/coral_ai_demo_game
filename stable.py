@@ -103,6 +103,7 @@ class Baloon():
         if self.x[1] + self.radius >= height:
             self.x[1] -= 6
             self.v *= [1, -1]
+            self.score=0
         if self.x[1] < 0:
             self.v *= [1, -0.5]
             self.x[1] += 4
@@ -253,6 +254,7 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 # create a text surface object,
 # on which text is drawn on it.
 text = font.render('IAI', True,WHITE)
+text_score = font.render('MY SCORE:' + str(baloon.score), True,WHITE)
 
 """______________________________________________________________________________
     *                                                                           *
@@ -286,6 +288,8 @@ while True :
 
 
     screen.blit(text, baloon.x)
+    screen.blit(text_score, np.array([width *4/5, height * 1/5]))
+
     screen.blit(pygame.transform.scale(surf, (300, 300)), (0, 0))
 
     pygame.display.flip()
