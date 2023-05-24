@@ -103,7 +103,7 @@ class Baloon():
         if self.x[1] + self.radius >= height:
             self.x[1] -= 6
             self.v *= [1, -1]
-            self.score=0
+
         if self.x[1] < 0:
             self.v *= [1, -0.5]
             self.x[1] += 4
@@ -288,7 +288,7 @@ while True :
 
 
     screen.blit(text, baloon.x)
-    screen.blit(text_score, np.array([width *2/3, height * 1/6]))
+    screen.blit(text_score, np.array([width *2/3, height * 1/8]))
 
     screen.blit(pygame.transform.scale(surf, (300, 300)), (0, 0))
 
