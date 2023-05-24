@@ -263,7 +263,6 @@ text = font.render('IAI', True,WHITE)
 """
 
 while True :
-    screen.blit(pygame.transform.scale(surf_back, (height, width)), (0, 0))
 
     if webcam_stream.stopped is True :
         break
@@ -283,6 +282,9 @@ while True :
     frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
 
     surf = pygame.surfarray.make_surface(frame[-1::-1])
+
+    screen.blit(pygame.transform.scale(surf_back, (height, width)), (0, 0))
+
     screen.blit(text, baloon.x)
     screen.blit(pygame.transform.scale(surf, (300, 300)), (0, 0))
 
