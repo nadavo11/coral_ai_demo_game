@@ -285,7 +285,7 @@ while True :
     surf = pygame.surfarray.make_surface(frame[-1::-1])
 
     text_score = font.render('MY SCORE:' + str(baloon.score), True, WHITE)
-    screen.blit(text_score, np.array([width * 2 / 3, height * 1 / 15]))
+    screen.blit(text_score, np.array([width * 2 / 3, 2]))
     screen.blit(text, baloon.x)
 
 
