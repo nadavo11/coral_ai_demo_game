@@ -227,8 +227,7 @@ class WebcamStream:
             if self.stopped is True:
                 break
             self.grabbed, self.frame = self.vcap.read()
-            self.frame = cv2.transpose(self.frame)
-            self.frame = cv2.cvtColor(self.frame[-1::-1], cv2.COLOR_BGR2RGB)
+
             if self.grabbed is False:
                 print('[Exiting] No more frames to read')
                 self.stopped = True
@@ -282,7 +281,8 @@ while True :
     #windowSurface = pygame.display.set_mode((width, height), 0, 32)
     #print(frame.shape)
 
-
+    frame = cv2.transpose(frame)
+    frame = cv2.cvtColor(self.frame[-1::-1], cv2.COLOR_BGR2RGB)
     surf = pygame.surfarray.make_surface(frame)
 
     text_score = font.render('MY SCORE:' + str(baloon.score), True, WHITE)
