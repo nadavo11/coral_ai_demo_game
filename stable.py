@@ -15,7 +15,7 @@ os.environ["DISPLAY"] = ":0"
 flags = FULLSCREEN | DOUBLEBUF
 
 # Set up the display
-width, height = 1800, 1080
+width, height = 1920, 1000
 
 
 screen = pygame.display.set_mode((width, height))
