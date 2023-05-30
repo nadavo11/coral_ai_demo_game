@@ -207,6 +207,8 @@ class WebcamStream:
 
         # reading a single frame from vcap stream for initializing
         self.grabbed, self.frame = self.vcap.read()
+        self.frame = cv2.transpose(self.frame)
+        self.frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
         if self.grabbed is False:
             print('[Exiting] No more frames to read')
             exit(0)
@@ -279,8 +281,7 @@ while True :
     #pygame.display.flip()
     #windowSurface = pygame.display.set_mode((width, height), 0, 32)
     #print(frame.shape)
-    frame = cv2.transpose(frame)
-    frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+
 
     surf = pygame.surfarray.make_surface(frame[-1::-1])
 
