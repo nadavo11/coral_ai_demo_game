@@ -282,7 +282,7 @@ while True :
     #print(frame.shape)
 
     frame = cv2.transpose(frame)
-    frame = cv2.cvtColor(self.frame[-1::-1], cv2.COLOR_BGR2RGB)
+    frame = cv2.cvtColor(frame[-1::-1], cv2.COLOR_BGR2RGB)
     surf = pygame.surfarray.make_surface(frame)
 
     text_score = font.render('MY SCORE:' + str(baloon.score), True, WHITE)
