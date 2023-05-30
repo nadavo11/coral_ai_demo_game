@@ -109,7 +109,7 @@ class Baloon():
             self.x[1] += 4
 
         if self.radius >= self.x[0] or self.x[0] >= width - self.radius:
-            self.v *= [-1, 1]
+            self.v *= [-2, 1]
 
     def update(self):
 
