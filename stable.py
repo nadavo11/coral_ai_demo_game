@@ -15,7 +15,7 @@ os.environ["DISPLAY"] = ":0"
 flags = FULLSCREEN | DOUBLEBUF
 
 # Set up the display
-width, height = 1900, 1080
+width, height = 1800, 1080
 
 
 screen = pygame.display.set_mode((width, height))
@@ -207,8 +207,6 @@ class WebcamStream:
 
         # reading a single frame from vcap stream for initializing
         self.grabbed, self.frame = self.vcap.read()
-        self.frame = cv2.transpose(self.frame)
-        self.frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
         if self.grabbed is False:
             print('[Exiting] No more frames to read')
             exit(0)
@@ -229,6 +227,8 @@ class WebcamStream:
             if self.stopped is True:
                 break
             self.grabbed, self.frame = self.vcap.read()
+            self.frame = cv2.transpose(self.frame)
+            self.frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
             if self.grabbed is False:
                 print('[Exiting] No more frames to read')
                 self.stopped = True
